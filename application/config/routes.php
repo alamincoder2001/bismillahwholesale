@@ -498,7 +498,7 @@ $route['bank_ledger'] = 'Administrator/Account/bankLedger';
 
 // Graph
 $route['graph'] = 'Administrator/Graph/graph';
-$route['get_graph_data'] = 'Administrator/Graph/getGraphData';
+$route['get_graph_data'] = 'Administrator/Graph/getGraphData'; 
 
 // SMS
 $route['sms'] = 'Administrator/SMS';

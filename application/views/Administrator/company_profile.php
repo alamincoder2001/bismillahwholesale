@@ -63,6 +63,12 @@
 						<span class="lbl"> 1/2 of A4 Size</span>
 					</label>
 				</div>
+				<div class="radio inline-radio">
+					<label>
+						<input name="inpt" id="a43" type="radio" value="4" <?php if($selected->print_type==4){ echo "checked"; } ?>  class="ace" />
+						<span class="lbl"> 1/2 of right A4 Size</span>
+					</label>
+				</div>
 				
 				<div class="radio inline-radio">
 					<label>

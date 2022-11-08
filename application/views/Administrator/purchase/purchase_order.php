@@ -314,7 +314,7 @@
 											<div class="form-group">
 												<label class="col-xs-12 control-label no-padding-right">Paid</label>
 												<div class="col-xs-12">
-													<input type="number" id="paid" class="form-control" v-model="purchase.paid" v-on:input="calculateTotal" v-bind:disabled="selectedSupplier.Supplier_Type == 'G' ? true : true" />
+													<input type="number" id="paid" class="form-control" v-model="purchase.paid" v-on:input="calculateTotal" v-bind:disabled="selectedSupplier.Supplier_Type == 'G' ? true : false" />
 												</div>
 											</div>
 										</td>
@@ -512,16 +512,32 @@
 				this.calculateTotal();
 			},
 			onChangeProduct() {
-				if(this.selectedProduct == null){
-					this.getProducts()
+
+				if (this.selectedProduct == null) {
+					this.selectedProduct = {
+						Product_SlNo: '',
+						Product_Code: '',
+						display_text: 'Select Product',
+						Product_Name: '',
+						Unit_Name: '',
+						quantity: '',
+						Product_Purchase_Rate: '',
+						Product_SellingPrice: 0.00,
+						total: ''
+					},
+					this.searchValue = "";
 					return
-				}else{
-					if(this.selectedProduct.Product_Purchase_Rate == null){
-						this.getProducts()
-						return
-					}
+				}
+				if(this.selectedProduct.Product_SlNo !== ""){
 					this.$refs.quantity.focus();
 				}
+
+
+				// if (this.selectedProduct.Product_Purchase_Rate == null) {
+				// 	this.getProducts()
+				// 	return
+					
+				// }
 
 			},
 			productTotal() {

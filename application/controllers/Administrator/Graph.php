@@ -138,7 +138,7 @@
             ")->row()->total_amount;
 
             // Cash Balance
-            $cashBalance = $this->mt->getTransactionSummary()->cash_balance;
+            $cashBalance = $this->mt->getTransactionSummary()->cash_balance; 
 
             // Top Customers
             $topCustomers = $this->db->query("
@@ -161,6 +161,7 @@
                 from tbl_saledetails sd
                 join tbl_product p on p.Product_SlNo = sd.Product_IDNo
                 where sd.SaleDetails_BranchId = ?
+                and sd.Status != 'd'
                 group by sd.Product_IDNo
                 order by sold_quantity desc
                 limit 5

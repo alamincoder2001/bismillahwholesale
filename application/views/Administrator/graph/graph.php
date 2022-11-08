@@ -327,9 +327,9 @@
         },
         created(){
             this.getGraphData();
-            // setInterval(() => {
-            //     this.getGraphData();
-            // }, 10000);
+            setInterval(() => {
+                this.getGraphData();
+            }, 10000);
         },
         methods: {
             getGraphData(){
