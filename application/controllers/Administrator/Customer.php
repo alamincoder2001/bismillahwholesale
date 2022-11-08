@@ -216,20 +216,24 @@ class Customer extends CI_Controller
             $customerId = null;
             $res_message = "";
 
-            $duplicateMobileQuery = $this->db->query("select * from tbl_customer where Customer_Mobile = ? and Customer_brunchid = ?", [$customerObj->Customer_Mobile, $this->session->userdata("BRANCHid")]);
+            $duplicateMobileQuery = $this->db->query("select * from tbl_customer where Customer_Mobile = ? and Customer_brunchid = ? and status=?", [$customerObj->Customer_Mobile, $this->session->userdata("BRANCHid"), 'a']);
 
             if($duplicateMobileQuery->num_rows() > 0) {
-                $duplicateCustomer = $duplicateMobileQuery->row();
+                // $duplicateCustomer = $duplicateMobileQuery->row();
 
-                unset($customer['Customer_Code']);
-                $customer["UpdateBy"]   = $this->session->userdata("FullName");
-                $customer["UpdateTime"] = date("Y-m-d H:i:s");
-                $customer["status"]     = 'a';
-                $this->db->where('Customer_SlNo', $duplicateCustomer->Customer_SlNo)->update('tbl_customer', $customer);
+                // unset($customer['Customer_Code']);
+                // $customer["UpdateBy"]   = $this->session->userdata("FullName");
+                // $customer["UpdateTime"] = date("Y-m-d H:i:s");
+                // $customer["status"]     = 'a';
+                // $this->db->where('Customer_SlNo', $duplicateCustomer->Customer_SlNo)->update('tbl_customer', $customer);
                 
-                $customerId = $duplicateCustomer->Customer_SlNo;
-                $customerObj->Customer_Code = $duplicateCustomer->Customer_Code;
-                $res_message = 'Customer updated successfully';
+                // $customerId = $duplicateCustomer->Customer_SlNo;
+                // $customerObj->Customer_Code = $duplicateCustomer->Customer_Code;
+                
+                $res_message = 'Mobile number already exits! Try another number';
+                $res = ['success'=>false, 'message' => $res_message];
+                echo json_encode($res);
+                exit;
             } else {
                 $customer["AddBy"] = $this->session->userdata("FullName");
                 $customer["AddTime"] = date("Y-m-d H:i:s");
@@ -280,7 +284,7 @@ class Customer extends CI_Controller
         try{
             $customerObj = json_decode($this->input->post('data'));
             
-            $customerMobileCount = $this->db->query("select * from tbl_customer where Customer_Mobile = ? and Customer_SlNo != ? and Customer_brunchid = ?", [$customerObj->Customer_Mobile, $customerObj->Customer_SlNo, $this->session->userdata("BRANCHid")])->num_rows();
+            $customerMobileCount = $this->db->query("select * from tbl_customer where status = ? and Customer_Mobile = ? and Customer_SlNo != ? and Customer_brunchid = ?", ['a', $customerObj->Customer_Mobile, $customerObj->Customer_SlNo, $this->session->userdata("BRANCHid")])->num_rows();
 
             if($customerMobileCount > 0){
                 $res = ['success'=>false, 'message'=>'Mobile number already exists'];

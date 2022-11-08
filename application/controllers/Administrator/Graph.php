@@ -14,7 +14,7 @@
             $access = $this->mt->userAccess();
             if(!$access){
                 redirect(base_url());
-            }
+            } 
             $data['title'] = "Graph";
             $data['content'] = $this->load->view('Administrator/graph/graph', $data, true);
             $this->load->view('Administrator/index', $data);

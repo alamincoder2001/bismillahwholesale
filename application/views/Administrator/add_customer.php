@@ -114,7 +114,7 @@
 				<div class="form-group clearfix">
 					<label class="control-label col-md-4">Mobile:</label>
 					<div class="col-md-7">
-						<input type="text" class="form-control" v-model="customer.Customer_Mobile" required>
+						<input type="text" id="mobile" class="form-control" v-model="customer.Customer_Mobile" required>
 					</div>
 				</div>
 
@@ -307,15 +307,17 @@
 				axios.post(url, fd, {
 					onUploadProgress: upe => {
 						let progress = Math.round(upe.loaded / upe.total * 100);
-						console.log(progress);
 					}
 				}).then(res=>{
 					let r = res.data;
-					alert(r.message);
-					if(r.success){
+					if(r.success == true){
+						alert(r.message);
 						this.resetForm();
 						this.customer.Customer_Code = r.customerCode;
 						this.getCustomers();
+					}else{
+						alert(r.message);
+						document.querySelector("#mobile").focus()
 					}
 				})
 			},

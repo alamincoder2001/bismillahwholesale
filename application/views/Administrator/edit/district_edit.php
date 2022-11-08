@@ -63,7 +63,7 @@
 				<tbody>
 					<?php 
 					$BRANCHid=$this->session->userdata('BRANCHid');
-					$query = $this->db->query("SELECT * FROM tbl_district where status='a' order by District_Name asc");
+					$query = $this->db->query("SELECT * FROM tbl_district where status='a' and branch_id='$BRANCHid' order by District_Name asc");
 					$row = $query->result();
 					//echo "<pre>";print_r($row);exit;
 					 ?>

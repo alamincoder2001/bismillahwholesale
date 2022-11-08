@@ -334,8 +334,6 @@
         methods: {
             getGraphData(){
                 axios.get('/get_graph_data').then(res => {
-                    // console.log(res.data.top_products);
-                    // return;
                     this.salesData = [
                         ['Date', 'Sales']
                     ]

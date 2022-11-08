@@ -186,6 +186,7 @@ class Page extends CI_Controller {
         $this->load->view('Administrator/index', $data);
     }
     public function insert_area()  {
+        $branchId = $this->session->userdata("BRANCHid");
         $district = $this->input->post('district');
         $query = $this->db->query("SELECT District_Name from tbl_district where District_Name = '$district'");
         
@@ -197,6 +198,7 @@ class Page extends CI_Controller {
             $data = array(
                 "District_Name"          =>$this->input->post('district', TRUE),
                 "AddBy"                  =>$this->session->userdata("FullName"),
+                "branch_id"              => $branchId,
                 "AddTime"                =>date("Y-m-d H:i:s")
                 );
             
@@ -216,11 +218,13 @@ class Page extends CI_Controller {
         $this->load->view('Administrator/index', $data);
     }
     public function areaupdate(){
+        $branchId = $this->session->userdata("BRANCHid");
         $id = $this->input->post('id');
         $fld = 'District_SlNo';
             $data = array(
                 "District_Name"                     =>$this->input->post('district', TRUE),
                 "UpdateBy"                          =>$this->session->userdata("FullName"),
+                "branch_id"                         => $branchId,
                 "UpdateTime"                        =>date("Y-m-d H:i:s")
             );
             if($this->mt->update_data("tbl_district", $data, $id,$fld)){
@@ -241,7 +245,8 @@ class Page extends CI_Controller {
     } 
 
     public function getDistricts(){
-        $districts = $this->db->query("select * from tbl_district d where d.status = 'a'")->result();
+        $branchId = $this->session->userdata("BRANCHid");
+        $districts = $this->db->query("select * from tbl_district d where d.status = 'a' and d.branch_id = '$branchId'")->result();
         echo json_encode($districts);
     }
     //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
