@@ -315,7 +315,7 @@
 			async print() {
 				let reportContent = `
 					<div class="container-fluid">
-						<h4 style="text-align:center">${this.selectedSearchType.text} Report</h4 style="text-align:center">
+						<h4 style="text-align:center;">${this.selectedSearchType.text} Report</h4>
 						<h6 style="text-align:center">${this.selectionText}</h6>
 						${this.selectedSearchType.value == 'current'? '<span style="display: flex;justify-content: flex-end;">Current Date: '+ moment().format('DD-MM-YYYY') +'</span>':''}
 					</div>

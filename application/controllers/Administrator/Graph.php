@@ -148,6 +148,7 @@
                 from tbl_salesmaster sm 
                 join tbl_customer c on c.Customer_SlNo = sm.SalseCustomer_IDNo
                 where sm.SaleMaster_branchid = ?
+                and sm.Status = 'a'
                 group by sm.SalseCustomer_IDNo
                 order by amount desc 
                 limit 10

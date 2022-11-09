@@ -612,6 +612,7 @@ class Model_Table extends CI_Model{
             (select ifnull(sum(pr.PurchaseReturn_ReturnAmount), 0.00) from tbl_purchasereturn pr
                 join tbl_purchasemaster rpm on rpm.PurchaseMaster_InvoiceNo = pr.PurchaseMaster_InvoiceNo
                 where rpm.Supplier_SlNo = s.Supplier_SlNo
+                and rpm.status = 'a'
                 " . ($date == null ? "" : " and pr.PurchaseReturn_ReturnDate < '$date'") . "
             ) as returned,
             

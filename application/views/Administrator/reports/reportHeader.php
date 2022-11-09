@@ -25,8 +25,8 @@
     ?>
     <div class="container">
         <div class="row">
-            <div class="col-xs-2"><img src="<?php echo base_url();?>uploads/company_profile_thum/<?php echo $companyInfo->Company_Logo_org; ?>" alt="Logo" style="height:80px;" /></div>
-            <div class="col-xs-10" style="padding-top:20px;">
+            <div class="col-xs-2" style="height:90px;display: flex;justify-content: center;align-items: center;"><img style="height: 100%; width:100%;" src="<?php echo base_url();?>uploads/company_profile_thum/<?php echo $companyInfo->Company_Logo_org; ?>" alt="Logo" style="height:80px;" /></div>
+            <div class="col-xs-10">
                 <strong style="font-size:18px;"><?php echo $companyInfo->Company_Name; ?></strong><br>
                 <p style="white-space: pre-line;"><?php echo $companyInfo->Repot_Heading; ?></p>
             </div>

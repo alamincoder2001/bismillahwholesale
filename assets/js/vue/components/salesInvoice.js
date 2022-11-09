@@ -41,7 +41,6 @@ const salesInvoice = Vue.component('sales-invoice', {
                                     <td>Sl.</td>
                                     <td>Description</td>
                                     <td>Qnty</td>
-                                    <td>Unit</td>
                                     <td>Unit Price</td>
                                     <td>Total</td>
                                 </tr>
@@ -49,9 +48,8 @@ const salesInvoice = Vue.component('sales-invoice', {
                             <tbody>
                                 <tr v-for="(product, sl) in cart">
                                     <td>{{ sl + 1 }}</td>
-                                    <td>{{ product.Product_Name }}</td>
-                                    <td>{{ product.SaleDetails_TotalQuantity }}</td>
-                                    <td>{{ product.Unit_Name }}</td>
+                                    <td style="text-align:left;">{{ product.Product_Name }}</td>
+                                    <td>{{ product.SaleDetails_TotalQuantity }}{{ product.Unit_Name }}</td>
                                     <td>{{ product.SaleDetails_Rate }}</td>
                                     <td align="right">{{ product.SaleDetails_TotalAmount }}</td>
                                 </tr>
@@ -64,8 +62,7 @@ const salesInvoice = Vue.component('sales-invoice', {
                         <br>
                         <table class="pull-left">
                             <tr>
-                                <td><strong>Previous Due:</strong></td>
-                                
+                                <td><strong>Previous Due:</strong></td>                                
                                 <td style="text-align:right">{{ sales.SaleMaster_Previous_Due == null ? '0.00' : sales.SaleMaster_Previous_Due  }}</td>
                             </tr>
                             <tr>
@@ -119,7 +116,7 @@ const salesInvoice = Vue.component('sales-invoice', {
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-xs-12">
+                    <div class="col-xs-12" style="margin-top:-12px;">
                         <strong>In Word: </strong> {{ convertNumberToWords(sales.SaleMaster_TotalSaleAmount) }}<br><br>
                         <strong>Note: </strong>
                         <p style="white-space: pre-line">{{ sales.SaleMaster_Description }}</p>
@@ -181,18 +178,15 @@ const salesInvoice = Vue.component('sales-invoice', {
             this.style = document.createElement('style');
             this.style.innerHTML = `
                 div[_h098asdh]{
-                    /*background-color:#e0e0e0;*/
-                    font-weight: bold;
-                    font-size:15px;
-                    margin-bottom:15px;
-                    padding: 5px;
-                    border-top: 1px dotted #454545;
+                    background-color:#e0e0e0;
+                    font-weight: 800;
+                    font-size:12px;
+                    /*border-top: 1px dotted #454545;*/
                     border-bottom: 1px dotted #454545;
                 }
                 div[_d9283dsc]{
-                    padding-bottom:25px;
                     border-bottom: 1px solid #ccc;
-                    margin-bottom: 15px;
+                    margin-bottom: 5px;
                 }
                 table[_a584de]{
                     width: 100%;
@@ -310,14 +304,14 @@ const salesInvoice = Vue.component('sales-invoice', {
                     <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
                     <style>
                         html, body{
-                            width:535px !important;
+                            width:520px !important;
                             float:right;
                             margin-right:5px;
+                            margin-top: 3px;
                         }
                         body, table{
-                            font-size: 10px;
+                            font-size: 7px;
                         }
-
                         @media print {
                             @page {size: A4 landscape;}
                         }
@@ -325,20 +319,34 @@ const salesInvoice = Vue.component('sales-invoice', {
                 </head>
                 <body>
                     <div class="row">
-                        <div class="col-xs-2"><img src="/uploads/company_profile_thum/${this.currentBranch.Company_Logo_org}" alt="Logo" style="height:80px;" /></div>
-                        <div class="col-xs-10" style="padding-top:20px;">
+                        <div class="col-xs-2" style="padding-right:0;display: flex;justify-content: center;align-items: center;"><img style="width: 40px;height: 35px;" src="/uploads/company_profile_thum/${this.currentBranch.Company_Logo_org}" alt="Logo" style="height:80px;" /></div>
+                        <div class="col-xs-10">
                             <strong style="font-size:18px;">${this.currentBranch.Company_Name}</strong><br>
                             <p style="white-space:pre-line;">${this.currentBranch.Repot_Heading}</p>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-xs-12">
-                            <div style="border-bottom: 4px double #454545;margin-top:7px;margin-bottom:7px;"></div>
+                            <div style="border-bottom: 4px double #454545;margin-top:5px;margin-bottom:0px;"></div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-xs-12">
                             ${invoiceContent}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 text-right" style="display: flex;justify-content: space-between;position: sticky;bottom: 0;left: 0;margin-top: 20px;">
+                            <span style="text-decoration:overline;">Received by</span>
+                            <span style="text-decoration:overline;">Authorized by</span>
+                        </div>
+                    </div>
+                    <div class="row" style="font-size:7px;">
+                        <div class="col-xs-6">
+                            Print Date: ${moment().format('DD-MM-YYYY h:mm a')}, Printed by: ${this.sales.AddBy}
+                        </div>
+                        <div class="col-xs-6 text-right">
+                            Developed by: Link-Up Technologoy, Contact no: 01911978897
                         </div>
                     </div>
                 </body>
@@ -387,24 +395,43 @@ const salesInvoice = Vue.component('sales-invoice', {
                         </style>
                     </head>
                     <body>
-                        <div class="row">
-                            <div class="col-xs-2"><img src="/uploads/company_profile_thum/${this.currentBranch.Company_Logo_org}" alt="Logo" style="height:80px;" /></div>
-                            <div class="col-xs-10" style="padding-top:20px;">
-                                <strong style="font-size:18px;">${this.currentBranch.Company_Name}</strong><br>
-                                <p style="white-space:pre-line;">${this.currentBranch.Repot_Heading}</p>
+                            <div class="row">
+                                <div class="col-xs-2"><img src="/uploads/company_profile_thum/${this.currentBranch.Company_Logo_org}" alt="Logo" style="height:80px;" /></div>
+                                <div class="col-xs-10" style="padding-top:20px;">
+                                    <strong style="font-size:18px;">${this.currentBranch.Company_Name}</strong><br>
+                                    <p style="white-space:pre-line;">${this.currentBranch.Repot_Heading}</p>
+                                </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-xs-12">
-                                <div style="border-bottom: 4px double #454545;margin-top:7px;margin-bottom:7px;"></div>
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <div style="border-bottom: 4px double #454545;margin-top:7px;margin-bottom:7px;"></div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-xs-12">
-                                ${invoiceContent}
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    ${invoiceContent}
+                                </div>
                             </div>
-                        </div>
-                    </body>
+                            <div class="row" style="border-bottom:1px solid #ccc;margin-bottom:5px;padding-bottom:6px;">
+                                <div class="col-xs-6">
+                                    <span style="text-decoration:overline;">Received by</span><br><br>
+                                    ** THANK YOU FOR YOUR BUSINESS **
+                                </div>
+                                <div class="col-xs-6 text-right">
+                                    <span style="text-decoration:overline;">Authorized by</span>
+                                </div>
+                            </div>
+                            <div style="position:fixed;left:0;bottom:15px;width:100%;">
+                                <div class="row" style="font-size:12px;">
+                                    <div class="col-xs-6">
+                                        Print Date: ${moment().format('DD-MM-YYYY h:mm a')}, Printed by: ${this.sales.AddBy}
+                                    </div>
+                                    <div class="col-xs-6 text-right">
+                                        Developed by: Link-Up Technologoy, Contact no: 01911978897
+                                    </div>
+                                </div>
+                            </div>
+                        </body>
                     </html>
 				`);
             } else {
